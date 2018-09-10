@@ -1,0 +1,10 @@
+web:
+  hosts:
+    ec2-35-171-161-214.compute-1.amazonaws.com:
+    ec2-34-239-110-149.compute-1.amazonaws.com:
+db:
+  hosts:
+    ec2-34-227-152-112.compute-1.amazonaws.com:
+local:
+  hosts:
+    localhost:

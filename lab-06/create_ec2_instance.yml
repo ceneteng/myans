@@ -1,0 +1,18 @@
+---
+- name: Create an EC2 instance
+  hosts: localhost
+  gather_facts: False
+  tasks:
+    - name: Launch instance
+      ec2:
+         key_name: "{{ lookup('env','AWS_KEY_PAIR') }}"
+         group: default
+         instance_type: t2.micro
+         image: ami-49f0762d
+         wait: true
+         region: ca-central-1
+         aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY') }}"
+         aws_secret_key: "{{ lookup('env', 'AWS_SECRET_KEY') }}"
+      register: ec2
+    - name: Print all ec2 variables
+      debug: var=ec2

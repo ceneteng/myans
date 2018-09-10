@@ -1,0 +1,20 @@
+- name: create ec2 instances
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+
+    - name: provision instances
+      ec2:
+        key_name: Mac
+        group: launch-wizard-4
+        region: us-east-1
+        instance_type: t2.micro
+        image: ami-04681a1dbd79675a5
+        exact_count: 3
+        count_tag:
+          Name: autospin
+        instance_tags:
+          Name: autospin
+      register: ec2
+        

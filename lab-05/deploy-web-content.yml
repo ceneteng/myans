@@ -1,0 +1,18 @@
+---
+- hosts: webserver
+  tasks:
+  - name: Stop and remove nginx
+    service: name=nginx state=stopped
+  - name: Remove nginx package
+    yum: name=nginx state=removed
+  ignore_errors: yes
+
+
+- hosts: webserver
+  become: true
+  vars_files:
+    - "vars.yml"
+  roles:
+    - ntp
+    - httpd
+    - deploy_dynamic_content
