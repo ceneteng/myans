@@ -2,9 +2,3 @@
 localhost
 
 [webserver]
-ip-172-31-43-18.ec2.internal
-ip-172-31-34-195.ec2.internal
-ip-172-31-34-151.ec2.internal
-
-[webserver:vars]
-ansible_user=ec2-user
