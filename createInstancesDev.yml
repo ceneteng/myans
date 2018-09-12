@@ -6,7 +6,7 @@
 
     - name: provision instances
       ec2:
-        key_name: devbox
+        key_name: jenkins
         group: launch-wizard-4
         region: us-east-1
         instance_type: t2.micro
