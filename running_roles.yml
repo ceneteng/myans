@@ -1,5 +1,5 @@
 - name: Installing git
-  hosts: webserver
+  hosts: all
   become: yes
   roles:
     - git
