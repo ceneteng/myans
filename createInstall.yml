@@ -43,7 +43,7 @@
   gather_facts: false
   tasks:
   - Name: Install Python
-    shell: "sudo apt-get install python-minimal"
+    raw: sudo apt-get -y install python-minimal
   - Name: Install packages
     apt: 
       name: "{{ item }}"
