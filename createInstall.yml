@@ -6,8 +6,8 @@
 
     - name: provision instances
       ec2:
-        key_name: devbox
-        group: launch-wizard-4
+        key_name: 
+        group: web
         region: us-east-1
         instance_type: t2.micro
         image: ami-0c54494f920b19106
