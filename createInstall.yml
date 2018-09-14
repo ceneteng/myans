@@ -72,7 +72,7 @@
   become: True
   gather_facts: false
   tasks:
-    - shell: sudo systemctl restart apache
+    - shell: sudo systemctl restart apache2
 
 
     
