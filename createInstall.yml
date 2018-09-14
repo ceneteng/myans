@@ -42,7 +42,10 @@
   become: True
   tasks:
    - Name: Install packages
-      apt: name="{{ item }}" state=present
+      apt: 
+        name: "{{ item }}"
+        state: present
+
       with_items:
         - apache2
         - mysql-server
