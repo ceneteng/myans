@@ -41,7 +41,6 @@
   hosts: ubulaunched
   become: True
   gather_facts: false
-  ansible_ssh_user: ubuntu
   tasks:
   - Name: Install packages
     apt: 
