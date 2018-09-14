@@ -52,7 +52,8 @@
     with_items:
       - apache2
       - mysql-server
-      - php5
+      - php7.0
+      - wordpress
 
     
 
