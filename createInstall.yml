@@ -66,6 +66,13 @@
   roles:
     - mysql
     - wordpress
+  
+- name: restart apache
+  hosts: ubulaunched
+  become: True
+  gather_facts: false
+  tasks:
+    - shell: sudo systemctl restart apache
 
 
     
