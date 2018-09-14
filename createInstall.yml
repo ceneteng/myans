@@ -52,8 +52,12 @@
     with_items:
       - apache2
       - mysql-server
-      - php7.0
+      - php7.2-mysql
+      - php7.2
+      - libapache2-mod-php7.2
       - python-mysqldb
+      - php7.2-gd
+      - php7.2-ssh2
 
 - name: configure wordpress
   hosts: ubulaunched
