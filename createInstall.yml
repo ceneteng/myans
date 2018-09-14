@@ -58,8 +58,6 @@
     - mysql
     - wordpress
 
-  - Name: Start Apache
-    shell: sudo systemctl restart apache2.service
 
     
 
