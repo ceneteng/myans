@@ -42,13 +42,15 @@
   become: True
   gather_facts: false
   tasks:
+  - Name: Install Python
+    shell: "sudo apt-get install python-minimal"
   - Name: Install packages
     apt: 
       name: "{{ item }}"
       state: present
 
     with_items:
-      - python-minimal
+      - python-minimaly
       - apache2
       - mysql-server
       - php5-mysql
