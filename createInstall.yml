@@ -50,7 +50,6 @@
       state: present
 
     with_items:
-      - python-minimaly
       - apache2
       - mysql-server
       - php5-mysql
