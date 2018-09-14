@@ -6,16 +6,18 @@
 
     - name: provision instances
       ec2:
-        key_name: 
+        key_name: ubuadmin
         group: web
-        region: us-east-1
+        region: us-east-2
         instance_type: t2.micro
-        image: ami-0c54494f920b19106
+        image: ami-0552e3455b9bc8d50
         #exact_count: 1
         count_tag:
-          Name: autospin
+          Name: Web
         instance_tags:
-          Name: autospin
+          Name: web
+          Type: autospin
+          App: wordpress
       register: ec2
 
     # - name: Wait for SSH to come up
@@ -38,8 +40,15 @@
 - name: install
   hosts: ubulaunched
   become: True
-  roles:
-    - tomcat
+  apt: name={{ item }} state=present
+  with_items:
+    - apache2
+    - mysql-server
+    - php5-mysql
+    - php5
+    - libapache2-mod-php5
+    - php5-mcrypt
+    - python-mysqldb
     
 
         
