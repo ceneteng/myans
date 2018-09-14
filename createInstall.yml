@@ -54,6 +54,10 @@
       - mysql-server
       - php7.0
 
+- name: configure wordpress
+  hosts: ubulaunched
+  become: True
+  gather_facts: false
   roles:
     - mysql
     - wordpress
