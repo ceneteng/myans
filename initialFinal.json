@@ -1,0 +1,702 @@
+{
+    "AWSTemplateFormatVersion" : "2010-09-09",
+   "Resources" : {
+       
+       "ProductionVPC" : {
+        "Type": "AWS::EC2::VPC",
+        "Properties": {
+            "CidrBlock": "10.2.0.0/16",
+            "EnableDnsSupport": "true",
+            "EnableDnsHostnames": "true",
+            "InstanceTenancy": "default",
+            "Tags": [
+                {
+                    "Key": "Name",
+                    "Value": "ProductionVPC"
+                }
+                ]
+                      }
+                         },
+    "PublicSubnetProdVPC" : {
+        "Type" : "AWS::EC2::Subnet",
+        "Properties" : {
+            "CidrBlock" : "10.2.1.0/24",
+            "MapPublicIpOnLaunch" : "True",
+            "VpcId" : { "Ref" : "ProductionVPC" },
+            "Tags" : [
+                {
+                    "Key" : "Name",
+                    "Value" : "PublicSubnetProd"
+                }
+                
+                    ]
+                       }
+                            },
+    "PrivateSubnetProdVPC" : {
+        "Type" : "AWS::EC2::Subnet",
+        "Properties" : {
+            "CidrBlock" : "10.2.2.0/24",
+            "MapPublicIpOnLaunch" : "False",
+            "VpcId" : { "Ref" : "ProductionVPC" },
+            "Tags" : [
+                {
+                    "Key" : "Name",
+                    "Value" : "PrivateSubnetProd"
+                }
+                
+                    ]
+                       }
+                            },    
+    
+      
+    "TestVPC" : {
+        "Type": "AWS::EC2::VPC",
+        "Properties": {
+            "CidrBlock": "10.3.0.0/16",
+            "EnableDnsSupport": "true",
+            "EnableDnsHostnames": "true",
+            "InstanceTenancy": "default",
+            "Tags": [
+                {
+                    "Key": "Name",
+                    "Value": "TestVPC"
+                }
+                    ]
+                      }
+                },
+                
+        "PublicSubnetTestVPC" : {
+        "Type" : "AWS::EC2::Subnet",
+        "Properties" : {
+            "CidrBlock" : "10.3.1.0/24",
+            "MapPublicIpOnLaunch" : "True",
+            "VpcId" : { "Ref" : "TestVPC" },
+            "Tags" : [
+                {
+                    "Key" : "Name",
+                    "Value" : "PublicSubnetTest"
+                }
+                
+                    ]
+                       }
+                            },
+                            
+        "PrivateSubnetTestVPC" : {
+        "Type" : "AWS::EC2::Subnet",
+        "Properties" : {
+            "CidrBlock" : "10.3.2.0/24",
+            "MapPublicIpOnLaunch" : "False",
+            "VpcId" : { "Ref" : "TestVPC" },
+            "Tags" : [
+                {
+                    "Key" : "Name",
+                    "Value" : "PrivateSubnetTest"
+                }
+                
+                    ]
+                       }
+                            },
+        
+        "DevelopmentVPC" : {
+        "Type": "AWS::EC2::VPC",
+        "Properties": {
+            "CidrBlock": "10.4.0.0/16",
+            "EnableDnsSupport": "true",
+            "EnableDnsHostnames": "true",
+            "InstanceTenancy": "default",
+            "Tags": [
+                {
+                    "Key": "Name",
+                    "Value": "DevelopmentVPC"
+                }
+        
+                    ]
+                      }
+                           },
+        "PublicSubnetDevVPC" : {
+        "Type" : "AWS::EC2::Subnet",
+        "Properties" : {
+            "CidrBlock" : "10.4.1.0/24",
+            "MapPublicIpOnLaunch" : "True",
+            "VpcId" : { "Ref" : "DevelopmentVPC" },
+            "Tags" : [
+                {
+                    "Key" : "Name",
+                    "Value" : "PublicSubnetDev"
+                }
+                
+                    ]
+                       }
+                            },
+        
+        "PrivateSubnetDevVPC" : {
+        "Type" : "AWS::EC2::Subnet",
+        "Properties" : {
+            "CidrBlock" : "10.4.2.0/24",
+            "MapPublicIpOnLaunch" : "False",
+            "VpcId" : { "Ref" : "DevelopmentVPC" },
+            "Tags" : [
+                {
+                    "Key" : "Name",
+                    "Value" : "PrivateSubnetDev"
+                }
+                
+                    ]
+                       }
+                            },
+                            
+        "ProdIGW" : {
+        "Type" : "AWS::EC2::InternetGateway",
+        "Properties" : {
+        "Tags" : [
+                {
+                    "Key" : "Name",
+                    "Value" : "ProdIGW"
+                }
+                
+                    ]
+                        }
+                            },      
+                            
+        "AttachProdIGW" : {
+        "Type" : "AWS::EC2::VPCGatewayAttachment",
+        "Properties" : {
+        "InternetGatewayId" : { "Ref" : "ProdIGW" },
+        "VpcId" : { "Ref" : "ProductionVPC" }
+                        }
+                            },  
+                            
+        "TestIGW" : {
+        "Type" : "AWS::EC2::InternetGateway",
+        "Properties" : {
+        "Tags" : [
+                {
+                    "Key" : "Name",
+                    "Value" : "TestIGW"
+                }
+                
+                    ]
+                        }
+                            },  
+                            
+        "AttachTestIGW" : {
+        "Type" : "AWS::EC2::VPCGatewayAttachment",
+        "Properties" : {
+        "InternetGatewayId" : { "Ref" : "TestIGW" },
+        "VpcId" : { "Ref" : "TestVPC" }
+                        }
+                            },
+                            
+        "DevIGW" : {
+        "Type" : "AWS::EC2::InternetGateway",
+        "Properties" : {
+        "Tags" : [
+                {
+                    "Key" : "Name",
+                    "Value" : "DevIGW"
+                }
+                
+                    ]
+                        }
+                            },
+        
+        "AttachDevIGW" : {
+        "Type" : "AWS::EC2::VPCGatewayAttachment",
+        "Properties" : {
+        "InternetGatewayId" : { "Ref" : "DevIGW" },
+        "VpcId" : { "Ref" : "DevelopmentVPC" }
+                        }
+                            },                    
+                            
+        "VPCPeer1" : {
+        "Type" : "AWS::EC2::VPCPeeringConnection",
+        "Properties" : {
+            "PeerVpcId" : { "Ref" : "ProductionVPC" },
+            "VpcId" : { "Ref" : "TestVPC" },
+            "Tags" : [
+                {
+                    "Key" : "Name",
+                    "Value" : "ProdTestPeer"
+                }
+                
+                    ]
+            
+            
+                        }
+                            },
+                            
+        "VPCPeer2" : {
+        "Type" : "AWS::EC2::VPCPeeringConnection",
+        "Properties" : {
+            "PeerVpcId" : { "Ref" : "TestVPC" },
+            "VpcId" : { "Ref" : "DevelopmentVPC" },
+            "Tags" : [
+                {
+                    "Key" : "Name",
+                    "Value" : "TestDevPeer"
+                }
+                
+                    ]
+            
+            
+                        }
+                            },
+        
+        "TestRouteTable" : {
+        "Type" : "AWS::EC2::RouteTable",
+        "Properties" : {
+            "VpcId" : { "Ref" : "TestVPC" },
+            "Tags" : [
+                {
+                    "Key" : "Name",
+                    "Value" : "TestRouteTable"
+                }
+                
+                    ]
+                        }
+                            },
+                            
+        "TestRouteEntry1" : {
+        "Type" : "AWS::EC2::Route",
+        "Properties" : {
+            "DestinationCidrBlock" : "10.2.0.0/16",
+            "RouteTableId" : { "Ref" : "TestRouteTable" },
+            "VpcPeeringConnectionId" : { "Ref" : "VPCPeer1" }
+                        }
+                            },
+                            
+        "TestRouteEntry2" : {
+        "Type" : "AWS::EC2::Route",
+        "Properties" : {
+            "DestinationCidrBlock" : "10.4.0.0/16",
+            "RouteTableId" : { "Ref" : "TestRouteTable" },
+            "VpcPeeringConnectionId" : { "Ref" : "VPCPeer2" }
+    
+                        }
+                            },                    
+                            
+        "TestRouteEntry3" : {
+        "DependsOn" : "TestIGW",
+        "Type" : "AWS::EC2::Route",
+        "Properties" : {
+            "DestinationCidrBlock" : "0.0.0.0/0",
+            "RouteTableId" : { "Ref" : "TestRouteTable" },
+            "GatewayId" : { "Ref" : "TestIGW" }
+                        }
+                            },
+                            
+        "ProdRouteTable" : {
+        "Type" : "AWS::EC2::RouteTable",
+        "Properties" : {
+            "VpcId" : { "Ref" : "ProductionVPC" },
+            "Tags" : [
+                {
+                    "Key" : "Name",
+                    "Value" : "ProdRouteTable"
+                }
+                
+                    ]
+                        }
+                            },
+                            
+        "ProdRouteEntry1" : {
+        "Type" : "AWS::EC2::Route",
+        "Properties" : {
+            "DestinationCidrBlock" : "10.3.0.0/16",
+            "RouteTableId" : { "Ref" : "ProdRouteTable" },
+            "VpcPeeringConnectionId" : { "Ref" : "VPCPeer1" }
+    
+                        }
+                            },
+                            
+        "ProdRouteEntry2" : {
+        "DependsOn" : "ProdIGW",
+        "Type" : "AWS::EC2::Route",
+        "Properties" : {
+            "DestinationCidrBlock" : "0.0.0.0/0",
+            "RouteTableId" : { "Ref" : "ProdRouteTable" },
+            "GatewayId" : { "Ref" : "ProdIGW" }
+                        }
+                            },
+                          
+                            
+        "DevRouteTable" : {
+        "Type" : "AWS::EC2::RouteTable",
+        "Properties" : {
+            "VpcId" : { "Ref" : "DevelopmentVPC" },
+            "Tags" : [
+                {
+                    "Key" : "Name",
+                    "Value" : "DevRouteTable"
+                }
+                
+                    ]
+                        }
+                            },
+                            
+        "DevRouteEntry1" : {
+        "Type" : "AWS::EC2::Route",
+        "Properties" : {
+            "DestinationCidrBlock" : "10.3.0.0/16",
+            "RouteTableId" : { "Ref" : "DevRouteTable" },
+            "VpcPeeringConnectionId" : { "Ref" : "VPCPeer2" }
+    
+                        }
+                            },
+                            
+        "DevRouteEntry2" : {
+        "DependsOn" : "DevIGW",
+        "Type" : "AWS::EC2::Route",
+        "Properties" : {
+            "DestinationCidrBlock" : "0.0.0.0/0",
+            "RouteTableId" : { "Ref" : "DevRouteTable" },
+            "GatewayId" : { "Ref" : "DevIGW" }
+                        }
+                            },
+        
+        "AssociateDevRouteTable" : {
+        "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+        "Properties" : {
+        "RouteTableId" : { "Ref" : "DevRouteTable" },
+        "SubnetId" : { "Ref" : "PublicSubnetDevVPC" }
+                        }
+                            },
+                            
+        "AssociateTestRouteTable" : {
+        "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+        "Properties" : {
+        "RouteTableId" : { "Ref" : "TestRouteTable" },
+        "SubnetId" : { "Ref" : "PublicSubnetTestVPC" }
+                        }
+                            },
+                            
+        "AssociateProdRouteTable" : {
+        "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+        "Properties" : {
+        "RouteTableId" : { "Ref" : "ProdRouteTable" },
+        "SubnetId" : { "Ref" : "PublicSubnetProdVPC" }
+                        }
+            },
+
+        "TestNatSG" : {
+        "Type" : "AWS::EC2::SecurityGroup",
+        "Properties" : {
+            "GroupDescription" : "Allow ssh to NAT host",
+            "GroupName" : "TestNatSG",
+            "VpcId" : {"Ref" : "TestVPC"},
+            "SecurityGroupIngress" : [{
+                    "IpProtocol" : "tcp",
+                    "FromPort" : 22,
+                    "ToPort" : 22,
+                    "CidrIp" : "198.207.185.100/32"
+                },
+                {
+                    "IpProtocol" : "tcp",
+                    "FromPort" : 80,
+                    "ToPort" : 80,
+                    "CidrIp" : "10.3.2.0/24"
+                },
+                {
+                    "IpProtocol" : "tcp",
+                    "FromPort" : 443,
+                    "ToPort" : 443,
+                    "CidrIp" : "10.3.2.0/24"
+                }
+               ],
+            "SecurityGroupEgress" : [{
+                "IpProtocol" : 80,
+                "FromPort" : 80,
+                "ToPort" : 80,
+                "CidrIp" : "0.0.0.0/0"
+            }]
+        }
+        },  
+        "TestPrivSrvr" : {
+        "DependsOn" : "TestNatSG",
+        "Type" : "AWS::EC2::SecurityGroup",
+        "Properties" : {
+            "GroupName" : "TestPrivSrvr",
+            "GroupDescription" : "Allow ssh to NAT host",
+            "VpcId" : {"Ref" : "TestVPC"},
+            "SecurityGroupIngress" : [{
+                    "IpProtocol" : "tcp",
+                    "FromPort" : 22,
+                    "ToPort" : 22,
+                    "SourceSecurityGroupId" : {"Ref": "TestNatSG"}
+                }
+               ],
+            "SecurityGroupEgress" : [{
+                "IpProtocol" : 80,
+                "FromPort" : 80,
+                "ToPort" : 80,
+                "CidrIp" : "0.0.0.0/0"
+            }]
+        }
+        },      
+        "TestNAT" : {
+        "Type" : "AWS::EC2::Instance",
+        "Properties" : {
+            "ImageId" : "ami-0422d936d535c63b1",
+            "InstanceType" : "t2.micro",
+            "KeyName" : "Mac",
+            "SourceDestCheck" : "false",
+            "NetworkInterfaces": [ {
+                "AssociatePublicIpAddress": "true",
+                "DeviceIndex": "0",
+                "GroupSet": [{ "Ref" : "TestNatSG" }],
+                "SubnetId": { "Ref" : "PublicSubnetTestVPC" }
+            } ],
+            "Tags" : [{
+
+                "Key" : "Type",
+                "Value" : "NAT"
+            }]
+    }
+},    
+        "TestPrivRouteTable" : {
+        "Type" : "AWS::EC2::RouteTable",
+        "Properties" : {
+            "VpcId" : { "Ref" : "TestVPC" },
+            "Tags" : [
+                {
+                    "Key" : "Name",
+                    "Value" : "TestPrivRouteTable"
+                }
+                
+                    ]
+                        }
+                            },
+        "TestPrivRouteEntry1" : {
+        "DependsOn" : ["TestPrivRouteTable", "TestNAT"],
+        "Type" : "AWS::EC2::Route",
+        "Properties" : {
+            "DestinationCidrBlock" : "0.0.0.0/0",
+            "RouteTableId" : { "Ref" : "TestPrivRouteTable" },
+            "InstanceId" : { "Ref" : "TestNAT" }
+                        }
+                    },
+        "AssociateTestPrivRouteTable" : {
+        "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+        "Properties" : {
+        "RouteTableId" : { "Ref" : "TestPrivRouteTable" },
+        "SubnetId" : { "Ref" : "PrivateSubnetTestVPC" }
+                        }
+                            },
+        "DevNatSG" : {
+        "Type" : "AWS::EC2::SecurityGroup",
+        "Properties" : {
+            "GroupName" : "DevNatSg",
+            "GroupDescription" : "Allow ssh to NAT host",
+            "VpcId" : {"Ref" : "DevelopmentVPC"},
+            "SecurityGroupIngress" : [{
+                    "IpProtocol" : "tcp",
+                    "FromPort" : 22,
+                    "ToPort" : 22,
+                    "CidrIp" : "198.207.185.100/32"
+                },
+                {
+                    "IpProtocol" : "tcp",
+                    "FromPort" : 80,
+                    "ToPort" : 80,
+                    "CidrIp" : "10.4.2.0/24"
+                },
+                {
+                    "IpProtocol" : "tcp",
+                    "FromPort" : 443,
+                    "ToPort" : 443,
+                    "CidrIp" : "10.4.2.0/24"
+                }
+               ],
+            "SecurityGroupEgress" : [{
+                "IpProtocol" : 80,
+                "FromPort" : 80,
+                "ToPort" : 80,
+                "CidrIp" : "0.0.0.0/0"
+            }]
+        }
+        }, 
+        "DevPrivSrvr" : {
+        "DependsOn" : "DevNatSG",
+        "Type" : "AWS::EC2::SecurityGroup",
+        "Properties" : {
+            "GroupName" : "DevPrivSrvr",
+            "GroupDescription" : "Allow ssh to NAT host",
+            "VpcId" : {"Ref" : "DevelopmentVPC"},
+            "SecurityGroupIngress" : [{
+                    "IpProtocol" : "tcp",
+                    "FromPort" : 22,
+                    "ToPort" : 22,
+                    "SourceSecurityGroupId" : {"Ref": "DevNatSG"}
+                }
+               ],
+            "SecurityGroupEgress" : [{
+                "IpProtocol" : 80,
+                "FromPort" : 80,
+                "ToPort" : 80,
+                "CidrIp" : "0.0.0.0/0"
+            }]
+        }
+        },         
+        "DevNAT" : {
+        "Type" : "AWS::EC2::Instance",
+        "Properties" : {
+            "ImageId" : "ami-0422d936d535c63b1",
+            "InstanceType" : "t2.micro",
+            "KeyName" : "Mac",
+            "SourceDestCheck" : "false",
+            "NetworkInterfaces": [ {
+                "AssociatePublicIpAddress": "true",
+                "DeviceIndex": "0",
+                "GroupSet": [{ "Ref" : "DevNatSG" }],
+                "SubnetId": { "Ref" : "PublicSubnetDevVPC" }
+            } ],
+            "Tags" : [{
+
+                "Key" : "Type",
+                "Value" : "NAT"
+            }]
+        }
+    },
+        "DevPrivRouteTable" : {
+        "Type" : "AWS::EC2::RouteTable",
+        "Properties" : {
+            "VpcId" : { "Ref" : "DevelopmentVPC" },
+            "Tags" : [
+                {
+                    "Key" : "Name",
+                    "Value" : "DevPrivRouteTable"
+                }
+                
+                    ]
+                        }
+                            },
+        "DevPrivRouteEntry1" : {
+        "DependsOn" : ["DevPrivRouteTable", "DevNAT"],
+        "Type" : "AWS::EC2::Route",
+        "Properties" : {
+            "DestinationCidrBlock" : "0.0.0.0/0",
+            "RouteTableId" : { "Ref" : "DevPrivRouteTable" },
+            "InstanceId" : { "Ref" : "DevNAT" }
+                        }
+                    },
+        "AssociateDevPrivRouteTable" : {
+        "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+        "Properties" : {
+        "RouteTableId" : { "Ref" : "DevPrivRouteTable" },
+        "SubnetId" : { "Ref" : "PrivateSubnetDevVPC" }
+                        }
+                            },
+        "ProdNatSG" : {
+        "Type" : "AWS::EC2::SecurityGroup",
+        "Properties" : {
+            "GroupName" : "ProdNatSG",
+            "GroupDescription" : "Allow ssh to NAT host",
+            "VpcId" : {"Ref" : "ProductionVPC"},
+            "SecurityGroupIngress" : [{
+                    "IpProtocol" : "tcp",
+                    "FromPort" : 22,
+                    "ToPort" : 22,
+                    "CidrIp" : "198.207.185.100/32"
+                },
+                {
+                    "IpProtocol" : "tcp",
+                    "FromPort" : 80,
+                    "ToPort" : 80,
+                    "CidrIp" : "10.2.2.0/24"
+                },
+                {
+                    "IpProtocol" : "tcp",
+                    "FromPort" : 443,
+                    "ToPort" : 443,
+                    "CidrIp" : "10.2.2.0/24"
+                }
+               ],
+            "SecurityGroupEgress" : [{
+                "IpProtocol" : 80,
+                "FromPort" : 80,
+                "ToPort" : 80,
+                "CidrIp" : "0.0.0.0/0"
+            }]
+        }
+        },
+        "ProdPrivSrvr" : {
+        "DependsOn" : "ProdNatSG",
+        "Type" : "AWS::EC2::SecurityGroup",
+        "Properties" : {
+            "GroupName" : "ProdPrivSrvr",
+            "GroupDescription" : "Allow ssh to NAT host",
+            "VpcId" : {"Ref" : "ProductionVPC"},
+            "SecurityGroupIngress" : [{
+                    "IpProtocol" : "tcp",
+                    "FromPort" : 22,
+                    "ToPort" : 22,
+                    "SourceSecurityGroupId" : {"Ref": "ProdNatSG"}
+                }
+               ],
+            "SecurityGroupEgress" : [{
+                "IpProtocol" : 80,
+                "FromPort" : 80,
+                "ToPort" : 80,
+                "CidrIp" : "0.0.0.0/0"
+            }]
+        }
+        },             
+        "ProdNAT" : {
+        "Type" : "AWS::EC2::Instance",
+        "Properties" : {
+            "ImageId" : "ami-0422d936d535c63b1",
+            "InstanceType" : "t2.micro",
+            "KeyName" : "Mac",
+            "SourceDestCheck" : "false",
+            "NetworkInterfaces": [ {
+                "AssociatePublicIpAddress": "true",
+                "DeviceIndex": "0",
+                "GroupSet": [{ "Ref" : "ProdNatSG" }],
+                "SubnetId": { "Ref" : "PublicSubnetProdVPC" }
+            } ],
+        "Tags" : [{
+
+                "Key" : "Type",
+                "Value" : "NAT"
+            }]
+        }
+    },
+        "ProdPrivRouteTable" : {
+        "Type" : "AWS::EC2::RouteTable",
+        "Properties" : {
+            "VpcId" : { "Ref" : "ProductionVPC" },
+            "Tags" : [
+                {
+                    "Key" : "Name",
+                    "Value" : "ProdPrivRouteTable"
+                }
+                
+                    ]
+                        }
+                            },
+        "ProdPrivRouteEntry1" : {
+        "DependsOn" : ["ProdPrivRouteTable", "ProdNAT"],
+        "Type" : "AWS::EC2::Route",
+        "Properties" : {
+            "DestinationCidrBlock" : "0.0.0.0/0",
+            "RouteTableId" : { "Ref" : "ProdPrivRouteTable" },
+            "InstanceId" : { "Ref" : "ProdNAT" }
+                        }
+                    },
+        "AssociateProdPrivRouteTable" : {
+        "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+        "Properties" : {
+        "RouteTableId" : { "Ref" : "ProdPrivRouteTable" },
+        "SubnetId" : { "Ref" : "PrivateSubnetProdVPC" }
+                        }
+        }
+
+
+
+                            
+                            
+                            
+    }
+
+
+}

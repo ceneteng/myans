@@ -1,0 +1,26 @@
+{
+    "AWSTemplateFormatVersion" : "2010-09-09",
+   "Resources" : {
+       
+                            
+        "VPCPeer1" : {
+        "Type" : "AWS::EC2::VPCPeeringConnection",
+        "Properties" : {
+            "PeerVpcId" : { "Ref" : "ProductionVPC" },
+            "VpcId" : { "Ref" : "DevelopmentVPC" },
+            "Tags" : [
+                {
+                    "Key" : "Name",
+                    "Value" : "ProdTestPeer"
+                }
+                
+                    ]
+            
+            
+                        }
+                            }
+        
+                           
+                            
+    }
+}

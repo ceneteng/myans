@@ -1,0 +1,76 @@
+{
+    "AWSTemplateFormatVersion" : "2010-09-09",
+   "Resources" : {
+       
+
+        "TestALBSG" : {
+        "Type" : "AWS::EC2::SecurityGroup",
+        "Properties" : {
+            "GroupName" : "TestALBSG",
+            "GroupDescription" : "Allow ssh to NAT host",
+            "VpcId" : {"Ref" : "TestVPC"},
+            "SecurityGroupIngress" : [{
+
+                    "IpProtocol" : "tcp",
+                    "FromPort" : 80,
+                    "ToPort" : 80,
+                    "CidrIp" : "0.0.0.0/0"
+                }],
+            "SecurityGroupEgress" : [{
+                "IpProtocol" : "tcp",
+                "FromPort" : 80,
+                "ToPort" : 80,
+                "SourceSecurityGroupName" : {"Ref": "TestWPSG"}
+                }]
+        
+            }
+        },
+
+        "TestWPSG" : {
+            "Type" : "AWS::EC2::SecurityGroup",
+            "Properties" : {
+                "GroupName" : "TestALBSG",
+                "GroupDescription" : "Allow ssh to NAT host",
+                "VpcId" : {"Ref" : "TestVPC"},
+                "SecurityGroupIngress" : [{
+    
+                        "IpProtocol" : "tcp",
+                        "FromPort" : 80,
+                        "ToPort" : 80,
+                        "SourceSecurityGroupName" : {"Ref": "TestALBSG"}
+                    }
+                   ]   
+            
+                }
+            },
+
+            "TestBast" : {
+                "Type" : "AWS::EC2::SecurityGroup",
+                "Properties" : {
+                    "GroupName" : "TestALBSG",
+                    "GroupDescription" : "Allow ssh to NAT host",
+                    "VpcId" : {"Ref" : "TestVPC"},
+                    "SecurityGroupIngress" : [{
+        
+                            "IpProtocol" : "tcp",
+                            "FromPort" : 22,
+                            "ToPort" : 22,
+                            "CidrIp" : "198.207.185.100/32"
+                                        }],
+
+                    "SecurityGroupEgress" : [{
+
+                            "IpProtocol" : -1,
+                            "FromPort" : -1,
+                            "ToPort" : -1,
+                            "CidrIp" : "0.0.0.0/0"
+                                        }]
+                
+                    }
+                }
+    
+                    
+   
+   
+    }
+}
